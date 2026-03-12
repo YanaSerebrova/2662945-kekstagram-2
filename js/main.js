@@ -32,9 +32,16 @@ let commentId = 1;
 function createComment() {
   return {
     id: commentId++,
-    avatar:
+    avatar:: 'img/avatar-' + getRandomNumber(1, 6) + '.svg',
     message: getRandomElement(Comments),
     name: getRandomElement(Names),
   };
 }
+function createComments() {
+  const comments = [];
+  const commentsCount = getRandomNumber(0, 30);
+  for (let i = 0; i < commentsCount; i++) {
+    comments.push(createComment());
+  }
+
 
