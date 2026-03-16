@@ -35,41 +35,7 @@ const Comments = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-export const getRandomNumber = (min, max) => {
-  const left = Math.ceil(Math.min(min, max));
-  const right = Math.floor(Math.max(min,max));
-  const random = Math.random() * (right - left + 1) + left;
-  return Math.floor(random);
-};
-
-const getRandomElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
-
-let commentId = 1;
-
-const createComment = () => ({
-  id: commentId++,
-  avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
-  message: getRandomElement(Comments),
-  name: getRandomElement(Names),
-});
-
-const getComments = () => {
-  const count = getRandomNumber(CommentsCount.MIN, CommentsCount.MAX);
-  const comments = [];
-  for (let i = 1; i <= count; i++) {
-    comments.push(createComment())
-  }
-  return comments;
-};
-
-const getPhoto = (k) => ({
-  id: k,
-  url: `photos/${k}.jpg`,
-  description: getRandomElement(Descriptions),
-  likes: getRandomNumber(Likes.MIN, Likes.MAX),
-  comments: getComments()
-});
-
-const getPhotos = (count) => Array.from({ length: count }, (_, i) => getPhoto(i + 1));
+import {getRandomNumber, getRandomElement} from './util.js'
+import { getPhotos } from './photos.js';
 
 console.log(getPhotos(PHOTOS_COUNT));
