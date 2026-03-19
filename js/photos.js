@@ -1,4 +1,6 @@
-import {getRandomNumber, getRandomElement} from './util.js'
+import {getRandomNumber, getRandomElement} from './utils.js';
+import {Descriptions, Likes, CommentsCount, Names, Comments} from './data.js';
+
 let commentId = 1;
 
 const createComment = () => ({
@@ -27,4 +29,3 @@ const getPhoto = (k) => ({
 
 export const getPhotos = (count) => Array.from({ length: count }, (_, i) => getPhoto(i + 1));
 
-console.log(getPhotos(PHOTOS_COUNT));

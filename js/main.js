@@ -1,5 +1,3 @@
-
-
 import { PHOTOS_COUNT } from './data.js';
 import { getPhotos } from './photos.js';
 
