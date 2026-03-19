@@ -58,3 +58,19 @@ console.log(getNumbers('ECMAScript 2022'));     // 2022
 console.log(getNumbers('1 кефир, 0.5 батона')); // 105
 console.log(getNumbers('агент 007'));           // 7
 console.log(getNumbers('а я томат'));           // NaN
+
+
+
+const toMinutes = (time) => {
+const [hours, minutes] = time.split(":");
+return hours * 60 + Number(minutes);
+}
+const checkMeetingTime = (workStart, workEnd, meetingStart, meetingDuration) => {
+
+const workStartMin = toMinutes(workStart);
+const workEndMin = toMinutes(workEnd);
+const meetingStartMin = toMinutes(meetingStart);
+const meetingEndMin = meetingStartMin + meetingDuration;
+
+return meetingStartMin >= workStartMin && meetingEndMin <= workEndMin;
+}
