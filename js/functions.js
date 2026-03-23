@@ -63,7 +63,7 @@ console.log(getNumbers('а я томат'));           // NaN
 
 const toMinutes = (time) => {
 const [hours, minutes] = time.split(":");
-return hours * 60 + Number(minutes);
+return Number(hours) * 60 + Number(minutes);
 }
 const checkMeetingTime = (workStart, workEnd, meetingStart, meetingDuration) => {
 
@@ -74,3 +74,29 @@ const meetingEndMin = meetingStartMin + meetingDuration;
 
 return meetingStartMin >= workStartMin && meetingEndMin <= workEndMin;
 }
+console.log(checkMeetingTime('08:00', '17:30', '14:00', 90));
+console.log(checkMeetingTime('8:0', '10:0', '8:0', 120));
+console.log(checkMeetingTime('08:00', '14:30', '14:00', 90));
+console.log(checkMeetingTime('14:00', '17:30', '08:0', 90));
+console.log(checkMeetingTime('8:00', '17:30', '08:00', 900));
+
+const flatNumber = 35;
+const flatsPerFloor = 4;
+const floorNumber = 5;
+
+const flatsPerEntrance = flatsPerFloor * floorNumber;
+const entrance = Math.ceil(flatNumber / flatsPerEntrance);
+const flatsInEntrance = ((flatNumber - 1) % flatsPerEntrance) + 1;
+let floor;
+if (flatsInEntrance <= flatsPerFloor) {
+floor = 1;
+} else if (flatsInEntrance <= flatsPerFloor * 2) {
+floor = 2;
+} else if (flatsInEntrance <= flatsPerFloor * 3) {
+floor = 3;
+} else if (flatsInEntrance <= flatsPerFloor * 4) {
+  floor = 4;
+} else {
+  floor = 5;
+};
+console.log(`Подъезд ${entrance}, этаж ${floor}`);
