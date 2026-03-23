@@ -67,10 +67,15 @@ return hours * 60 + Number(minutes);
 }
 const checkMeetingTime = (workStart, workEnd, meetingStart, meetingDuration) => {
 
-const workStartMin = toMinutes(workStart);
-const workEndMin = toMinutes(workEnd);
-const meetingStartMin = toMinutes(meetingStart);
-const meetingEndMin = meetingStartMin + meetingDuration;
+const checkWorkStart = toMinutes(workStart);
+const checkWorkEnd = toMinutes(workEnd);
+const checkMeetingStart = toMinutes(meetingStart);
+const checkMeetingEnd = checkmeetingStart + meetingDuration;
 
-return meetingStartMin >= workStartMin && meetingEndMin <= workEndMin;
+return checkMeetingStart >= checkWorkStart && checkMeetingEnd <= checkWorkEnd;
 }
+console.log(checkMeetingTime('08:00', '17:30', '14:00', 90));
+console.log(checkMeetingTime('8:0', '10:0', '8:0', 120));
+console.log(checkMeetingTime('08:00', '14:30', '14:00', 90));
+console.log(checkMeetingTime('14:00', '17:30', '08:0', 90));
+console.log(checkMeetingTime('8:00', '17:30', '08:00', 900));
