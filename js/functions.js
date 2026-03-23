@@ -70,7 +70,7 @@ const checkMeetingTime = (workStart, workEnd, meetingStart, meetingDuration) => 
 const checkWorkStart = toMinutes(workStart);
 const checkWorkEnd = toMinutes(workEnd);
 const checkMeetingStart = toMinutes(meetingStart);
-const checkMeetingEnd = checkmeetingStart + meetingDuration;
+const checkMeetingEnd = checkMeetingStart + meetingDuration;
 
 return checkMeetingStart >= checkWorkStart && checkMeetingEnd <= checkWorkEnd;
 }
