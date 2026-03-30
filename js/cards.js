@@ -1,27 +1,32 @@
-import { getPhotos } from "./photos.js";
+import { openModal } from './modal.js';
 
-const picturesContainer = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content;
+const picturesContainerNode = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-export const renderPictures = () => {
-  const photos = getPhotos(25);
+export const renderPictures = (photos) => {
   console.log('Всего фоток:', photos.length);
   const fragment = document.createDocumentFragment();
 
-photos.forEach((photo) => {
-const picture = pictureTemplate.cloneNode(true);
-const img = picture.querySelector('.picture__img');
-const likes = picture.querySelector('.picture__likes');
-const comments = picture.querySelector('.picture__comments');
+  photos.forEach((photo) => {
+    const picture = pictureTemplate.cloneNode(true);
+    const img = picture.querySelector('.picture__img');
+    const likes = picture.querySelector('.picture__likes');
+    const comments = picture.querySelector('.picture__comments');
 
-img.src = photo.url;
-img.alt = photo.description;
-likes.textContent = photo.likes;
-comments.textContent = photo.comments.length;
+    img.src = photo.url;
+    img.alt = photo.description;
+    likes.textContent = photo.likes;
+    comments.textContent = photo.comments.length;
 
-fragment.appendChild(picture);
+    picture.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      console.log('!!!')
+      openModal(photo);
+    });
+
+    fragment.appendChild(picture);
   });
 
-picturesContainer.appendChild(fragment);
+  picturesContainerNode.appendChild(fragment);
 };
 
