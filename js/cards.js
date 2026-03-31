@@ -1,4 +1,4 @@
-import { openBigPicture } from './modal.js';
+import { openModal } from './modal.js';
 
 const picturesContainerNode = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -20,8 +20,7 @@ export const renderPictures = (photos) => {
 
     picture.addEventListener('click', (evt) => {
       evt.preventDefault();
-      console.log('!!!')
-      openBigPicture(photo);
+      openModal(photo);
     });
 
     fragment.appendChild(picture);
