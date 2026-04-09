@@ -18,10 +18,12 @@ export const renderPictures = (photos) => {
     likes.textContent = photo.likes;
     comments.textContent = photo.comments.length;
 
+
    picture.addEventListener('click', (evt) => {
       evt.preventDefault();
       openModal(photo);
   });
+
     fragment.appendChild(picture);
   });
 
