@@ -1,4 +1,5 @@
 
+
 const modalNode = document.querySelector('.big-picture');
 const imgContainer = modalNode.querySelector('.big-picture__img');
 const bigPictureImg = imgContainer.querySelector('img');
