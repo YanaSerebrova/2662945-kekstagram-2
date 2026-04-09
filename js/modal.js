@@ -16,15 +16,22 @@ const closeBigPicture = () => {
   modalNode.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  closeButton.removeEventListener('click', onCloseButtonClick);
 };
+
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
+     evt.preventDefault();
     closeBigPicture();
   }
 }
+
+const onCloseButtonClick = () => {
+  closeBigPicture();
+};
+
 const renderComments = (comments) => {
   commentsList.textContent = '';
-
   comments.forEach((comment) => {
     const commentElement = document.createElement('li');
     commentElement.classList.add('social__comment');
@@ -46,8 +53,6 @@ const renderComments = (comments) => {
   });
 };
 
-document.addEventListener('keydown', onDocumentKeydown);
-closeButton.addEventListener('click', closeBigPicture);
 
 export const openModal = (photo) => {
   modalNode.classList.remove('hidden');
@@ -60,8 +65,10 @@ export const openModal = (photo) => {
   caption.textContent = photo.description;
 
   renderComments(photo.comments);
-
   commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
+
+  closeButton.addEventListener('click', onCloseButtonClick);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 

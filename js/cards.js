@@ -18,7 +18,7 @@ export const renderPictures = (photos) => {
     likes.textContent = photo.likes;
     comments.textContent = photo.comments.length;
 
-    picture.addEventListener('click', (evt) => {
+    picture.querySelector('.picture__img').addEventListener('click', (evt)  => {
       evt.preventDefault();
       openModal(photo);
     });
