@@ -4,4 +4,3 @@ import { getPhotos } from './photos.js';
 
 const photos = getPhotos(PHOTOS_COUNT);
 renderPictures(photos);
-
