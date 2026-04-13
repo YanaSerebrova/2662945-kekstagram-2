@@ -1,4 +1,6 @@
 import { checkValid, resetValidation } from "./validation.js";
+import { initScale, resetScale } from "./scale.js";
+import { initEffects, resetEffects } from "./effects.js";
 
 const inputFile = document.querySelector('#upload-file');
 const modalFormEditor = document.querySelector('.img-upload__overlay');
@@ -29,6 +31,9 @@ function closeModalFormEditor() {
   document.removeEventListener('keydown', onDocumentKeydown);
   modalFormEditorResetBtn.removeEventListener('click', onModalFormEditorResetBtnClick);
   uploadForm.reset();
+  inputFile.value = '';
+  resetScale();
+  resetEffects();
   resetValidation();
 }
 
@@ -46,6 +51,8 @@ export const initUploadModal = () => {
       uploadForm.submit();
     }
   });
-};
 
+  initScale();
+  initEffects();
+};
 
