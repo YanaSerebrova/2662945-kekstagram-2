@@ -1,44 +1,23 @@
+import { DEFAULT_EFFECT, EFFECTS, EffectsSettings } from "./constants.js";
+
 const uploadPreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.img-upload__effect-level');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectsList = document.querySelector('.effects__list');
 
-let currentEffect = 'none';
+let currentEffect = DEFAULT_EFFECT;
 
 const applyEffect = (value) => {
-  if (currentEffect === 'none') {
+  if (currentEffect === EFFECTS.NONE) {
     uploadPreview.style.filter = '';
+    return;
   }
-
-  if (currentEffect === 'chrome') {
-    uploadPreview.style.filter = `grayscale(${value})`;
-  }
-
-  if (currentEffect === 'sepia') {
-    uploadPreview.style.filter = `sepia(${value})`;
-  }
-
-  if (currentEffect === 'marvin') {
-    uploadPreview.style.filter = `invert(${value}%)`;
-  }
-
-  if (currentEffect === 'phobos') {
-    uploadPreview.style.filter = `blur(${value}px)`;
-  }
-
-  if (currentEffect === 'heat') {
-    uploadPreview.style.filter = `brightness(${value})`;
-  }
+  const { style, units } = EffectsSettings[currentEffect]
+  uploadPreview.style.filter = `${style}(${value}${units})`;
 };
 
 const initSlider = () => {
-  noUiSlider.create(effectLevelSlider, {
-    range: { min: 0, max: 100 },
-    start: 100,
-    step: 1,
-    connect: 'lower',
-  });
-
+  noUiSlider.create(effectLevelSlider, EffectsSettings[EFFECTS.NONE].slider);
   effectLevelSlider.noUiSlider.on('update', () => {
     const value = effectLevelSlider.noUiSlider.get();
     applyEffect(value);
@@ -48,45 +27,15 @@ const initSlider = () => {
 const setEffect = (effectName) => {
   currentEffect = effectName;
 
-  if (effectName === 'none') {
+  if (effectName === EFFECTS.NONE) {
     effectLevel.classList.add('hidden');
     uploadPreview.style.filter = '';
     return;
   }
 
   effectLevel.classList.remove('hidden');
-
-  if (effectName === 'chrome' || effectName === 'sepia') {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: { min: 0, max: 1 },
-      step: 0.1,
-    });
-    effectLevelSlider.noUiSlider.set(1);
-  }
-
-  if (effectName === 'marvin') {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: { min: 0, max: 100 },
-      step: 1,
-    });
-    effectLevelSlider.noUiSlider.set(100);
-  }
-
-  if (effectName === 'phobos') {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: { min: 0, max: 3 },
-      step: 0.1,
-    });
-    effectLevelSlider.noUiSlider.set(3);
-  }
-
-  if (effectName === 'heat') {
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: { min: 1, max: 3 },
-      step: 0.1,
-    });
-    effectLevelSlider.noUiSlider.set(3);
-  }
+  const { slider } = EffectsSettings[currentEffect];
+  effectLevelSlider.noUiSlider.updateOptions(slider);
 };
 
 const onEffectsChange = (evt) => {
@@ -102,8 +51,5 @@ export const initEffects = () => {
 };
 
 export const resetEffects = () => {
-  currentEffect = 'none';
-  uploadPreview.style.filter = '';
-  effectLevel.classList.add('hidden');
-  effectLevelSlider.noUiSlider.set(100);
+  setEffect(DEFAULT_EFFECT);
 };

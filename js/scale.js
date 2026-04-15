@@ -8,28 +8,30 @@ const MAX_SCALE = 100;
 const STEP = 25;
 const DEFAULT_SCALE = 100;
 
-const setScale = (value) => {
-  scaleControlValue.value = `${value}%`;
-  const scaleValue = value / 100;
-uploadPreview.style.transform = `scale(${scaleValue})`;
+let currentValue = DEFAULT_SCALE;
+
+const setScale = () => {
+  scaleControlValue.value = `${currentValue}%`;
+  uploadPreview.style.transform = `scale(${currentValue}%)`;
 }
 
 const onSmallerClick = () => {
-  const currentValue = parseInt(scaleControlValue.value);
-  setScale(Math.max(currentValue - STEP, MIN_SCALE));
+  currentValue = Math.max(currentValue - STEP, MIN_SCALE);
+  setScale();
 };
 
 const onBiggerClick = () => {
-  const currentValue = parseInt(scaleControlValue.value);
-  setScale(Math.min(currentValue + STEP, MAX_SCALE));
+  currentValue = Math.min(currentValue + STEP, MAX_SCALE);
+  setScale();
 };
 
 export const initScale = () => {
-  setScale(DEFAULT_SCALE);
+  setScale();
   scaleSmallerBtn.addEventListener('click', onSmallerClick);
   scaleBiggerBtn.addEventListener('click', onBiggerClick);
 };
 
 export const resetScale = () => {
+  currentValue = DEFAULT_SCALE;
   setScale(DEFAULT_SCALE);
 };
