@@ -1,4 +1,3 @@
-
 function checkStringLength(string, maxLength) {
   const stringLength = string.length;
   const check = stringLength <= maxLength;

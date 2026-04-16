@@ -1,6 +1,8 @@
 import { checkValid, resetValidation } from "./validation.js";
 import { initScale, resetScale } from "./scale.js";
 import { initEffects, resetEffects } from "./effects.js";
+import { sendPhoto } from './api.js';
+import { showSuccess, showError } from './messages.js';
 
 const inputFile = document.querySelector('#upload-file');
 const modalFormEditor = document.querySelector('.img-upload__overlay');
@@ -47,11 +49,21 @@ export const initUploadModal = () => {
 
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    if (checkValid()) {
-      uploadForm.submit();
-    }
-  });
+     if (!checkValid()) {
+    return;
+  }
 
+  const formData = new FormData(uploadForm);
+
+  sendPhoto(formData)
+    .then(() => {
+      showSuccess();
+      closeModalFormEditor(); // закрываем форму
+    })
+    .catch(() => {
+      showError();
+    });
+});
   initScale();
   initEffects();
 };

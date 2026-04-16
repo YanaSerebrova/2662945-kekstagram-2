@@ -3,6 +3,7 @@ import { openModal } from './modal.js';
 const picturesContainerNode = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+
 export const renderPictures = (photos) => {
   console.log('Всего фоток:', photos.length);
   const fragment = document.createDocumentFragment();

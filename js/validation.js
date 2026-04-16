@@ -9,27 +9,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'text-error',
 });
-/*
-const validateHashtags = (value) => {
-  if (!value.trim()) return true;
-  const tags = value.trim().toLowerCase().split(/\s+/);
-  if (tags.length > 5) return false;
-  const uniqueTags = new Set(tags);
-  if (uniqueTags.size !== tags.length) return false;
-  const pattern = /^#[a-zа-яё0-9]{1,19}$/i;
-  return tags.every(tag => pattern.test(tag));
-};
-pristine.addValidator(hashtagInput,
-  validateHashtags,
-  'Макс. 5 хэштегов, без повторов, # + буквы/цифры'
-);
 
-pristine.addValidator(
-  commentInput,
-  (value) => value.length <= 140,
-  'Макс. 140 символов'
-);
-*/
 pristine.addValidator(
   hashtagInput,
   (value) => {
