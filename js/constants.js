@@ -1,3 +1,20 @@
+export const SUBMIT_TEXTS = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+export const SUBMIT_BUTTON_STATUS = {
+  DISABLED: true,
+  ENABLED: false
+};
+
+export const Popups = {
+  ERROR: 'error',
+  SUCCESS: 'success'
+};
+
+export const DELAY = 5000;
+
 export const EFFECTS = {
   NONE: 'none',
   CHROME: 'chrome',

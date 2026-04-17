@@ -5,23 +5,21 @@ const Route = {
   SEND_DATA: '/',
 };
 
-export const getPhotos = () => {
-  return fetch(BASE_URL + Route.GET_DATA)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Ошибка загрузки данных');
-      }
-      return response.json();
-    });
-};
+export const getPhotos = () => fetch(BASE_URL + Route.GET_DATA)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error();
+    }
+    return response.json();
+  });
 
-export const sendPhoto = (formData) => {
-  return fetch(BASE_URL + Route.SEND_DATA, {
-    method: 'POST',
-    body: formData,
-  }).then((response) => {
+export const sendPhoto = (body) => fetch(BASE_URL + Route.SEND_DATA, {
+  method: 'POST',
+  body,
+})
+  .then((response) => {
     if (!response.ok) {
       throw new Error('Ошибка отправки данных');
     }
   });
-};
+

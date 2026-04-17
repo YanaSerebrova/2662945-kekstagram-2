@@ -1,6 +1,7 @@
 import { renderPictures } from './cards.js'
 import { getPhotos } from './api.js';
 import { initUploadModal } from './form.js';
+import { showAlert } from './utils.js';
 initUploadModal();
 
 getPhotos()
@@ -8,5 +9,5 @@ getPhotos()
     renderPictures(photos);
   })
   .catch(() => {
-    console.error('Ошибка загрузки');
+    showAlert();
   });
