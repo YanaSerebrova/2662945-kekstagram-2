@@ -5,7 +5,6 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 
 export const renderPictures = (photos) => {
-  console.log('Всего фоток:', photos.length);
   const fragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {

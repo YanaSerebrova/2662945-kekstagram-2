@@ -12,7 +12,7 @@ let currentValue = DEFAULT_SCALE;
 
 const setScale = () => {
   scaleControlValue.value = `${currentValue}%`;
-  uploadPreview.style.transform = `scale(${currentValue}%)`;
+  uploadPreview.style.transform = `scale(${currentValue / 100}%`;
 }
 
 const onSmallerClick = () => {

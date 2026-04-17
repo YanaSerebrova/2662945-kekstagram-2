@@ -8,7 +8,7 @@ const Route = {
 export const getPhotos = () => fetch(BASE_URL + Route.GET_DATA)
   .then((response) => {
     if (!response.ok) {
-      throw new Error();
+      throw new Error('Ошибка при загрузке данных');
     }
     return response.json();
   });
@@ -19,7 +19,7 @@ export const sendPhoto = (body) => fetch(BASE_URL + Route.SEND_DATA, {
 })
   .then((response) => {
     if (!response.ok) {
-      throw new Error('Ошибка отправки данных');
+      throw new Error('Ошибка при отправке данных');
     }
   });
 
