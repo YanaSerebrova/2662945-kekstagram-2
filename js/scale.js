@@ -12,8 +12,8 @@ let currentValue = DEFAULT_SCALE;
 
 const setScale = () => {
   scaleControlValue.value = `${currentValue}%`;
-  uploadPreview.style.transform = `scale(${currentValue / 100}%`;
-}
+  uploadPreview.style.transform = `scale(${currentValue / 100})`;
+};
 
 const onSmallerClick = () => {
   currentValue = Math.max(currentValue - STEP, MIN_SCALE);
@@ -33,5 +33,5 @@ export const initScale = () => {
 
 export const resetScale = () => {
   currentValue = DEFAULT_SCALE;
-  setScale(DEFAULT_SCALE);
+  setScale();
 };
