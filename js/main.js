@@ -1,6 +1,15 @@
 import { renderPictures } from './cards.js';
-import { PHOTOS_COUNT } from './data.js';
-import { getPhotos } from './photos.js';
+import { getPhotos } from './api.js';
+import { initUploadModal } from './form.js';
+import { showAlert } from './utils.js';
+import { initFilters } from './filter.js';
+initUploadModal();
 
-const photos = getPhotos(PHOTOS_COUNT);
-renderPictures(photos);
+getPhotos()
+  .then((photos) => {
+    renderPictures(photos);
+    initFilters(photos);
+  })
+  .catch(() => {
+    showAlert();
+  });
