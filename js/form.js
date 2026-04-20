@@ -1,9 +1,10 @@
-import { checkValid, resetValidation } from "./validation.js";
-import { initScale, resetScale } from "./scale.js";
-import { initEffects, resetEffects } from "./effects.js";
+import { checkValid, resetValidation } from './validation.js';
+import { initScale, resetScale } from './scale.js';
+import { initEffects, resetEffects } from './effects.js';
 import { sendPhoto} from './api.js';
 import { showPopup } from './messages.js';
-import { Popups, SUBMIT_BUTTON_STATUS, SUBMIT_TEXTS } from "./constants.js";
+import { isEscapeKey } from './utils.js';
+import { Popups, SUBMIT_BUTTON_STATUS, SUBMIT_TEXTS } from './constants.js';
 
 const inputFile = document.querySelector('#upload-file');
 const modalFormEditor = document.querySelector('.img-upload__overlay');
@@ -13,13 +14,16 @@ const modalFormEditorResetBtn = document.querySelector('#upload-cancel');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('#upload-submit');
+const previewImage = document.querySelector('.img-upload__preview img');
+const effectsPreviews = document.querySelectorAll('.effects__preview');
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
 
 const onModalFormEditorResetBtnClick = () => {
   closeModalFormEditor();
 };
 
 const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     if (document.activeElement === hashtagInput
       || document.activeElement === commentInput
@@ -45,6 +49,20 @@ function closeModalFormEditor() {
 
 export const initUploadModal = () => {
   inputFile.addEventListener('change', () => {
+    const file = inputFile.files[0];
+    if (!file) {
+      return;
+    }
+    const fileName = file.name.toLowerCase();
+    const isValidType = FILE_TYPES.some((type) => fileName.endsWith(type));
+    if (!isValidType) {
+      return;
+    }
+    const imageUrl = URL.createObjectURL(file);
+    previewImage.src = imageUrl;
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url(${imageUrl})`;
+    });
     modalFormEditor.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     modalFormEditorResetBtn.addEventListener('click', onModalFormEditorResetBtnClick);

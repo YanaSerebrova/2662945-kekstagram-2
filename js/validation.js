@@ -13,7 +13,9 @@ const pristine = new Pristine(uploadForm, {
 pristine.addValidator(
   hashtagInput,
   (value) => {
-    if (!value.trim()) return true;
+    if (!value.trim()) {
+      return true;
+    }
     const tags = value.trim().split(/\s+/);
     return tags.length <= 5;
   },
@@ -23,7 +25,9 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInput,
   (value) => {
-    if (!value.trim()) return true;
+    if (!value.trim()) {
+      return true;
+    }
     const tags = value.trim().toLowerCase().split(/\s+/);
     return new Set(tags).size === tags.length;
   },
@@ -33,12 +37,14 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagInput,
   (value) => {
-    if (!value.trim()) return true;
+    if (!value.trim()) {
+      return true;
+    }
 
     const tags = value.trim().split(/\s+/);
     const pattern = /^#[a-zа-яё0-9]{1,19}$/i;
 
-    return tags.every(tag => pattern.test(tag));
+    return tags.every((tag) => pattern.test(tag));
   },
   'Сообщение может содержать только # + буквы/цифры (до 20 символов)'
 );
@@ -51,4 +57,4 @@ pristine.addValidator(
 export const checkValid = () => pristine.validate();
 export const resetValidation = () => {
   pristine.reset();
-}
+};

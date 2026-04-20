@@ -19,10 +19,10 @@ export const renderPictures = (photos) => {
     comments.textContent = photo.comments.length;
 
 
-   picture.addEventListener('click', (evt) => {
+    picture.addEventListener('click', (evt) => {
       evt.preventDefault();
       openModal(photo);
-  });
+    });
 
     fragment.appendChild(picture);
   });

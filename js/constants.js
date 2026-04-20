@@ -1,3 +1,9 @@
+export const FILTERS = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed'
+};
+
 export const SUBMIT_TEXTS = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'

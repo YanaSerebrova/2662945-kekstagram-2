@@ -1,4 +1,4 @@
-import { DEFAULT_EFFECT, EFFECTS, EffectsSettings } from "./constants.js";
+import { DEFAULT_EFFECT, EFFECTS, EffectsSettings } from './constants.js';
 
 const uploadPreview = document.querySelector('.img-upload__preview img');
 const effectLevel = document.querySelector('.img-upload__effect-level');
@@ -12,7 +12,7 @@ const applyEffect = (value) => {
     uploadPreview.style.filter = '';
     return;
   }
-  const { style, units } = EffectsSettings[currentEffect]
+  const { style, units } = EffectsSettings[currentEffect];
   uploadPreview.style.filter = `${style}(${value}${units})`;
 };
 

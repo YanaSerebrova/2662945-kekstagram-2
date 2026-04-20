@@ -1,3 +1,4 @@
+import { isEscapeKey } from './utils.js';
 
 const modalNode = document.querySelector('.big-picture');
 const imgContainer = modalNode.querySelector('.big-picture__img');
@@ -7,33 +8,11 @@ const commentsShownCount = modalNode.querySelector('.social__comment-shown-count
 const commentsTotalCount = modalNode.querySelector('.social__comment-total-count');
 const commentsList = modalNode.querySelector('.social__comments');
 const caption = modalNode.querySelector('.social__caption');
-const commentCount = modalNode.querySelector('.social__comment-count');
 const commentsLoader = modalNode.querySelector('.comments-loader');
 const closeButton = modalNode.querySelector('.big-picture__cancel');
 
 let shownCommentsCount = 0;
 let currentPhoto = null;
-
-const closeBigPicture = () => {
-  modalNode.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
-  closeButton.removeEventListener('click', onCloseButtonClick);
-  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
-  shownCommentsCount = 0;
-  currentPhoto = null;
-};
-
-const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-     evt.preventDefault();
-    closeBigPicture();
-  }
-}
-
-const onCloseButtonClick = () => {
-  closeBigPicture();
-};
 
 const renderComments = (comments, count = 5) => {
   const start = shownCommentsCount;
@@ -41,8 +20,9 @@ const renderComments = (comments, count = 5) => {
 
   for (let i = start; i < end; i++) {
     const comment = comments[i];
-    const commentElement = document.createElement('li');
-    commentElement.classList.add('social__comment');
+
+    const li = document.createElement('li');
+    li.classList.add('social__comment');
 
     const img = document.createElement('img');
     img.classList.add('social__picture');
@@ -55,39 +35,67 @@ const renderComments = (comments, count = 5) => {
     text.classList.add('social__text');
     text.textContent = comment.message;
 
-    commentElement.append(img);
-    commentElement.append(text);
-    commentsList.append(commentElement);
-  };
+    li.append(img, text);
+    commentsList.append(li);
+  }
+
   shownCommentsCount = end;
   commentsShownCount.textContent = shownCommentsCount;
-};
-
-const onCommentsLoaderClick = () => {
-  if (currentPhoto) {
-    renderComments(currentPhoto.comments, 5);
-    if (shownCommentsCount >= currentPhoto.comments.length) {
-      commentsLoader.classList.add('hidden');
-    }
-  }
 };
 
 export const openModal = (photo) => {
   shownCommentsCount = 0;
   currentPhoto = photo;
+
+  const onCommentsLoaderClick = () => {
+    if (!currentPhoto) {
+      return;
+    }
+
+    renderComments(currentPhoto.comments, 5);
+
+    if (shownCommentsCount >= currentPhoto.comments.length) {
+      commentsLoader.classList.add('hidden');
+    }
+  };
+
+  const closeBigPicture = () => {
+    modalNode.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+
+    document.removeEventListener('keydown', onDocumentKeydown);
+    closeButton.removeEventListener('click', onCloseButtonClick);
+    commentsLoader.removeEventListener('click', onCommentsLoaderClick);
+
+    shownCommentsCount = 0;
+    currentPhoto = null;
+  };
+
+  const onCloseButtonClick = () => {
+    closeBigPicture();
+  };
+
+  const onDocumentKeydown = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closeBigPicture();
+    }
+  };
+
   modalNode.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   bigPictureImg.src = photo.url;
   likesCount.textContent = photo.likes;
-  commentsShownCount.textContent = '0';
+  commentsShownCount.textContent = 0;
   commentsTotalCount.textContent = photo.comments.length;
   caption.textContent = photo.description;
 
   commentsList.innerHTML = '';
 
   renderComments(photo.comments, 5);
-   if (photo.comments.length > shownCommentsCount) {
+
+  if (photo.comments.length > shownCommentsCount) {
     commentsLoader.classList.remove('hidden');
   } else {
     commentsLoader.classList.add('hidden');
@@ -97,4 +105,3 @@ export const openModal = (photo) => {
   document.addEventListener('keydown', onDocumentKeydown);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
-

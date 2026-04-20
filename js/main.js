@@ -1,4 +1,4 @@
-import { renderPictures } from './cards.js'
+import { renderPictures } from './cards.js';
 import { getPhotos } from './api.js';
 import { initUploadModal } from './form.js';
 import { showAlert } from './utils.js';
