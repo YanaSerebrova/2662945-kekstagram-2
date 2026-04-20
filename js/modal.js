@@ -1,3 +1,4 @@
+import { COMMENTS_STEP } from './constants.js';
 import { isEscapeKey } from './utils.js';
 
 const modalNode = document.querySelector('.big-picture');
@@ -48,7 +49,7 @@ const onCommentsLoaderClick = () => {
     return;
   }
 
-  renderComments(currentPhoto.comments, 5);
+  renderComments(currentPhoto.comments, COMMENTS_STEP);
 
   if (shownCommentsCount >= currentPhoto.comments.length) {
     commentsLoader.classList.add('hidden');
@@ -93,7 +94,7 @@ export const openModal = (photo) => {
 
   commentsList.innerHTML = '';
 
-  renderComments(photo.comments, 5);
+  renderComments(photo.comments, COMMENTS_STEP);
 
   if (photo.comments.length > shownCommentsCount) {
     commentsLoader.classList.remove('hidden');

@@ -7,6 +7,11 @@ export const FILTERS = {
 export const PICTURES_COUNT = {
   RANDOM: 10
 };
+export const COMMENTS_STEP = 5;
+
+export const MAX_HASHTAGS = 5;
+
+export const MAX_DESCRIPTION_LENGTH = 140;
 
 export const SUBMIT_TEXTS = {
   IDLE: 'Опубликовать',

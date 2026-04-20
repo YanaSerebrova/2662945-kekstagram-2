@@ -1,3 +1,5 @@
+import { MAX_DESCRIPTION_LENGTH, MAX_HASHTAGS } from "./constants";
+
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
@@ -17,9 +19,9 @@ pristine.addValidator(
       return true;
     }
     const tags = value.trim().split(/\s+/);
-    return tags.length <= 5;
+    return tags.length <= MAX_HASHTAGS;
   },
-  'Допустимо максимум 5 хэштегов'
+  `Допустимо максимум ${MAX_HASHTAGS} хэштегов`
 );
 
 pristine.addValidator(
@@ -51,8 +53,8 @@ pristine.addValidator(
 
 pristine.addValidator(
   commentInput,
-  (value) => value.length <= 140,
-  'Максимальная длина комментария - 140 символов'
+  (value) => value.length <= MAX_DESCRIPTION_LENGTH,
+  `Максимальная длина комментария - ${MAX_DESCRIPTION_LENGTH} символов`
 );
 export const checkValid = () => pristine.validate();
 
