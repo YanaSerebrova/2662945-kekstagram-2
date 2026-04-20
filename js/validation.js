@@ -1,4 +1,4 @@
-import { MAX_DESCRIPTION_LENGTH, MAX_HASHTAGS } from "./constants";
+import { MAX_DESCRIPTION_LENGTH, MAX_HASHTAGS } from './constants.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
