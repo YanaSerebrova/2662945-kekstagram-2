@@ -35,7 +35,7 @@ const setEffect = (effectName) => {
 
   effectLevel.classList.remove('hidden');
   const { slider } = EffectsSettings[currentEffect];
-  effectLevelSlider.noUiSlider.updateOptions(slider);
+  effectLevelSlider.noUiSlider.updateOptions(slider, true);
 };
 
 const onEffectsChange = (evt) => {

@@ -4,6 +4,10 @@ export const FILTERS = {
   DISCUSSED: 'filter-discussed'
 };
 
+export const PICTURES_COUNT = {
+  RANDOM: 10
+};
+
 export const SUBMIT_TEXTS = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'

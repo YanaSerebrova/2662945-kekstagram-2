@@ -1,20 +1,13 @@
 import { renderPictures } from './cards.js';
 import { debounce } from './utils.js';
-import { FILTERS } from './constants.js';
+import { FILTERS, PICTURES_COUNT } from './constants.js';
 
 const imgFilters = document.querySelector('.img-filters');
 const form = document.querySelector('.img-filters__form');
 
 let localPhotos;
-const clearPictures = () => {
-  document.querySelectorAll('.picture').forEach((el) => el.remove());
-};
 
-const renderPhotos = (photos) => {
-  clearPictures();
-  renderPictures(photos);
-};
-const debouncedRender = debounce(renderPhotos, 500);
+const debouncedRender = debounce(renderPictures);
 
 export const initFilters = (pictures) => {
   localPhotos = [...pictures];
@@ -29,7 +22,7 @@ const setActiveButton = (button) => {
 const filterPhotos = {
   [FILTERS.DEFAULT]: () => localPhotos,
   [FILTERS.DISCUSSED]: () => [...localPhotos].sort((a, b) => b.comments.length - a.comments.length),
-  [FILTERS.RANDOM]: () => [...localPhotos].sort(() => Math.random() - 0.5).slice(0, 10)
+  [FILTERS.RANDOM]: () => [...localPhotos].sort(() => Math.random() - 0.5).slice(0, PICTURES_COUNT.RANDOM)
 };
 
 form.addEventListener('click', ({ target }) => {

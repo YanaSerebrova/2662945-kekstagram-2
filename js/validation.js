@@ -55,6 +55,7 @@ pristine.addValidator(
   'Максимальная длина комментария - 140 символов'
 );
 export const checkValid = () => pristine.validate();
+
 export const resetValidation = () => {
   pristine.reset();
 };

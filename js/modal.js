@@ -67,16 +67,16 @@ const closeBigPicture = () => {
   currentPhoto = null;
 };
 
-const onCloseButtonClick = () => {
+function onCloseButtonClick(){
   closeBigPicture();
-};
+}
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown(evt){
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPicture();
   }
-};
+}
 
 export const openModal = (photo) => {
   shownCommentsCount = 0;
