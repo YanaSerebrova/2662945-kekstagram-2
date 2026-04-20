@@ -43,44 +43,44 @@ const renderComments = (comments, count = 5) => {
   commentsShownCount.textContent = shownCommentsCount;
 };
 
+const onCommentsLoaderClick = () => {
+  if (!currentPhoto) {
+    return;
+  }
+
+  renderComments(currentPhoto.comments, 5);
+
+  if (shownCommentsCount >= currentPhoto.comments.length) {
+    commentsLoader.classList.add('hidden');
+  }
+};
+
+const closeBigPicture = () => {
+  modalNode.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+
+  document.removeEventListener('keydown', onDocumentKeydown);
+  closeButton.removeEventListener('click', onCloseButtonClick);
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
+
+  shownCommentsCount = 0;
+  currentPhoto = null;
+};
+
+const onCloseButtonClick = () => {
+  closeBigPicture();
+};
+
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
+
 export const openModal = (photo) => {
   shownCommentsCount = 0;
   currentPhoto = photo;
-
-  const onCommentsLoaderClick = () => {
-    if (!currentPhoto) {
-      return;
-    }
-
-    renderComments(currentPhoto.comments, 5);
-
-    if (shownCommentsCount >= currentPhoto.comments.length) {
-      commentsLoader.classList.add('hidden');
-    }
-  };
-
-  const closeBigPicture = () => {
-    modalNode.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-
-    document.removeEventListener('keydown', onDocumentKeydown);
-    closeButton.removeEventListener('click', onCloseButtonClick);
-    commentsLoader.removeEventListener('click', onCommentsLoaderClick);
-
-    shownCommentsCount = 0;
-    currentPhoto = null;
-  };
-
-  const onCloseButtonClick = () => {
-    closeBigPicture();
-  };
-
-  const onDocumentKeydown = (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closeBigPicture();
-    }
-  };
 
   modalNode.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -105,3 +105,4 @@ export const openModal = (photo) => {
   document.addEventListener('keydown', onDocumentKeydown);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
+
