@@ -1,13 +1,12 @@
-import { DELAY } from './constants.js';
-
-const alertTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
-const body = document.body;
+const alertTemplateNode = document.querySelector('#data-error').content.querySelector('.data-error');
+const bodyNode = document.body;
+const DELAY = 5000;
 
 export const showAlert = () => {
-  const alert = alertTemplate.cloneNode(true);
-  body.append(alert);
+  const alertNode = alertTemplateNode.cloneNode(true);
+  bodyNode.append(alert);
   setTimeout(() => {
-    alert.remove();
+    alertNode.remove();
   }, DELAY);
 };
 export const debounce = (callback, timeoutDelay = 500) => {

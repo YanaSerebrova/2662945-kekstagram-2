@@ -1,11 +1,13 @@
-import { MAX_DESCRIPTION_LENGTH, MAX_HASHTAGS } from './constants.js';
+const MAX_HASHTAGS = 5;
 
-const uploadForm = document.querySelector('.img-upload__form');
-const hashtagInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
+const MAX_DESCRIPTION_LENGTH = 140;
+
+const uploadFormNode = document.querySelector('.img-upload__form');
+const hashtagInputNode = uploadFormNode.querySelector('.text__hashtags');
+const commentInputNode = uploadFormNode.querySelector('.text__description');
 
 
-const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(uploadFormNode, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
@@ -13,7 +15,7 @@ const pristine = new Pristine(uploadForm, {
 });
 
 pristine.addValidator(
-  hashtagInput,
+  hashtagInputNode,
   (value) => {
     if (!value.trim()) {
       return true;
@@ -25,7 +27,7 @@ pristine.addValidator(
 );
 
 pristine.addValidator(
-  hashtagInput,
+  hashtagInputNode,
   (value) => {
     if (!value.trim()) {
       return true;
@@ -37,7 +39,7 @@ pristine.addValidator(
 );
 
 pristine.addValidator(
-  hashtagInput,
+  hashtagInputNode,
   (value) => {
     if (!value.trim()) {
       return true;
@@ -45,14 +47,13 @@ pristine.addValidator(
 
     const tags = value.trim().split(/\s+/);
     const pattern = /^#[a-zа-яё0-9]{1,19}$/i;
-
     return tags.every((tag) => pattern.test(tag));
   },
   'Сообщение может содержать только # + буквы/цифры (до 20 символов)'
 );
 
 pristine.addValidator(
-  commentInput,
+  commentInputNode,
   (value) => value.length <= MAX_DESCRIPTION_LENGTH,
   `Максимальная длина комментария - ${MAX_DESCRIPTION_LENGTH} символов`
 );
