@@ -4,7 +4,7 @@ const picturesContainerNode = document.querySelector('.pictures');
 const pictureTemplateNode = document.querySelector('#picture').content.querySelector('.picture');
 
 const clearPictures = () => {
-  document.querySelectorAll('.picture').forEach((element) => element.remove());
+  picturesContainerNode.querySelectorAll('.picture').forEach((element) => element.remove());
 };
 
 export const renderPictures = (photos) => {

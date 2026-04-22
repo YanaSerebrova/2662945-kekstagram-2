@@ -36,7 +36,7 @@ const filterPhotos = {
 
 formNode.addEventListener('click', ({ target }) => {
   const filterButtonNode = target.closest('.img-filters__button');
-  if (filterButtonNode) {
+  if (filterButtonNode && localPhotos) {
     setActiveButton(filterButtonNode);
     const sortedPhotos = filterPhotos[filterButtonNode.id]();
     debouncedRender(sortedPhotos);

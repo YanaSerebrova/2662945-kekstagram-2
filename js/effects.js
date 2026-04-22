@@ -89,6 +89,7 @@ const uploadPreviewNode = document.querySelector('.img-upload__preview img');
 const effectLevelNode = document.querySelector('.img-upload__effect-level');
 const effectLevelSliderNode = document.querySelector('.effect-level__slider');
 const effectsListNode = document.querySelector('.effects__list');
+const effectLevelValueNode = document.querySelector('.effect-level__value');
 
 let currentEffect = DEFAULT_EFFECT;
 
@@ -105,6 +106,8 @@ const initSlider = () => {
   noUiSlider.create(effectLevelSliderNode, EffectsSettings[Effects.NONE].slider);
   effectLevelSliderNode.noUiSlider.on('update', () => {
     const value = effectLevelSliderNode.noUiSlider.get();
+    effectLevelValueNode.value = value;
+    effectLevelValueNode.value = parseFloat(value);
     applyEffect(value);
   });
 };
@@ -138,3 +141,4 @@ export const initEffects = () => {
 export const resetEffects = () => {
   setEffect(DEFAULT_EFFECT);
 };
+
