@@ -1,12 +1,12 @@
-const uploadPreviewNode = document.querySelector('.img-upload__preview img');
-const scaleControlValueNode = document.querySelector('.scale__control--value');
-const scaleSmallerButtonNode = document.querySelector('.scale__control--smaller');
-const scaleBiggerButtonNode = document.querySelector('.scale__control--bigger');
-
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 const STEP = 25;
 const DEFAULT_SCALE = 100;
+
+const uploadPreviewNode = document.querySelector('.img-upload__preview img');
+const scaleControlValueNode = document.querySelector('.scale__control--value');
+const scaleSmallerButtonNode = document.querySelector('.scale__control--smaller');
+const scaleBiggerButtonNode = document.querySelector('.scale__control--bigger');
 
 let currentValue = DEFAULT_SCALE;
 

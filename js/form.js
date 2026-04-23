@@ -5,6 +5,15 @@ import { sendPhoto} from './api.js';
 import { showPopup, Popups } from './messages.js';
 import { isEscapeKey } from './utils.js';
 
+const SUBMIT_TEXTS = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+const SUBMIT_BUTTON_STATUS = {
+  DISABLED: true,
+  ENABLED: false
+};
 const fileInputNode = document.querySelector('#upload-file');
 const uploadOverlayNode = document.querySelector('.img-upload__overlay');
 const uploadFormNode = document.querySelector('.img-upload__form');
@@ -15,16 +24,6 @@ const commentInputNode = uploadFormNode.querySelector('.text__description');
 const submitButtonNode = uploadFormNode.querySelector('#upload-submit');
 const previewImageNode = document.querySelector('.img-upload__preview img');
 const effectsPreviewsNodes = document.querySelectorAll('.effects__preview');
-const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
-const SUBMIT_TEXTS = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Публикую...'
-};
-
-const SUBMIT_BUTTON_STATUS = {
-  DISABLED: true,
-  ENABLED: false
-};
 
 const onUploadFormResetButtonClick = () => {
   closeModalUploadForm();
@@ -64,11 +63,7 @@ export const initUploadModal = () => {
     if (!file) {
       return;
     }
-    const fileName = file.name.toLowerCase();
-    const isValidType = FILE_TYPES.some((type) => fileName.endsWith(type));
-    if (!isValidType) {
-      return;
-    }
+
     const imageUrl = URL.createObjectURL(file);
     previewImageNode.src = imageUrl;
     effectsPreviewsNodes.forEach((previewNode) => {
@@ -80,6 +75,7 @@ export const initUploadModal = () => {
     document.addEventListener('keydown', onDocumentKeydown);
   });
 
+  document.activeElement.blur();
   const blockSubmitButton = (isBlocked = SUBMIT_BUTTON_STATUS.DISABLED) => {
     submitButtonNode.disabled = isBlocked;
     submitButtonNode.textContent = isBlocked

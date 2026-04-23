@@ -7,9 +7,7 @@ const Filters = {
   DISCUSSED: 'filter-discussed'
 };
 
-const PICTURES_COUNT = {
-  RANDOM: 10
-};
+const PICTURES_RANDOM_COUNT = 10;
 
 const imageFiltersNode = document.querySelector('.img-filters');
 const formNode = document.querySelector('.img-filters__form');
@@ -31,7 +29,7 @@ const setActiveButton = (filterButtonNode) => {
 const filterPhotos = {
   [Filters.DEFAULT]: () => localPhotos,
   [Filters.DISCUSSED]: () => [...localPhotos].sort((a, b) => b.comments.length - a.comments.length),
-  [Filters.RANDOM]: () => [...localPhotos].sort(() => Math.random() - 0.5).slice(0, PICTURES_COUNT.RANDOM)
+  [Filters.RANDOM]: () => [...localPhotos].sort(() => Math.random() - 0.5).slice(0, PICTURES_RANDOM_COUNT)
 };
 
 formNode.addEventListener('click', ({ target }) => {

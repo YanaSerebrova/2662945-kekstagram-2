@@ -1,6 +1,7 @@
+const DELAY = 5000;
+
 const alertTemplateNode = document.querySelector('#data-error').content.querySelector('.data-error');
 const bodyNode = document.body;
-const DELAY = 5000;
 
 export const showAlert = () => {
   const alertNode = alertTemplateNode.cloneNode(true);

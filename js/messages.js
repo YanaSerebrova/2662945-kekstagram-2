@@ -32,6 +32,5 @@ export const showPopup = (type) => {
   });
 
   document.addEventListener('keydown', onDocumentKeydown);
-
 };
 

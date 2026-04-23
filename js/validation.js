@@ -6,7 +6,6 @@ const uploadFormNode = document.querySelector('.img-upload__form');
 const hashtagInputNode = uploadFormNode.querySelector('.text__hashtags');
 const commentInputNode = uploadFormNode.querySelector('.text__description');
 
-
 const pristine = new Pristine(uploadFormNode, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
