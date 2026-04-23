@@ -2,92 +2,99 @@ import { checkValid, resetValidation } from './validation.js';
 import { initScale, resetScale } from './scale.js';
 import { initEffects, resetEffects } from './effects.js';
 import { sendPhoto} from './api.js';
-import { showPopup } from './messages.js';
+import { showPopup, Popups } from './messages.js';
 import { isEscapeKey } from './utils.js';
-import { Popups, SUBMIT_BUTTON_STATUS, SUBMIT_TEXTS } from './constants.js';
 
-const inputFile = document.querySelector('#upload-file');
-const modalFormEditor = document.querySelector('.img-upload__overlay');
-const uploadForm = document.querySelector('.img-upload__form');
-const pageBody = document.querySelector('body');
-const modalFormEditorResetBtn = document.querySelector('#upload-cancel');
-const hashtagInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
-const submitButton = uploadForm.querySelector('#upload-submit');
-const previewImage = document.querySelector('.img-upload__preview img');
-const effectsPreviews = document.querySelectorAll('.effects__preview');
-const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
+const SUBMIT_TEXTS = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
 
-const onModalFormEditorResetBtnClick = () => {
-  closeModalFormEditor();
+const SUBMIT_BUTTON_STATUS = {
+  DISABLED: true,
+  ENABLED: false
+};
+const fileInputNode = document.querySelector('#upload-file');
+const uploadOverlayNode = document.querySelector('.img-upload__overlay');
+const uploadFormNode = document.querySelector('.img-upload__form');
+const bodyNode = document.querySelector('body');
+const uploadFormResetButtonNode = document.querySelector('#upload-cancel');
+const hashtagInputNode = uploadFormNode.querySelector('.text__hashtags');
+const commentInputNode = uploadFormNode.querySelector('.text__description');
+const submitButtonNode = uploadFormNode.querySelector('#upload-submit');
+const previewImageNode = document.querySelector('.img-upload__preview img');
+const effectsPreviewsNodes = document.querySelectorAll('.effects__preview');
+
+const onUploadFormResetButtonClick = () => {
+  closeModalUploadForm();
 };
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    if (document.activeElement === hashtagInput
-      || document.activeElement === commentInput
-      || document.querySelector(`.${Popups.ERROR}`)) {
-      evt.stopPropagation();
-    } else {
-      closeModalFormEditor();
-    }
+  if (!isEscapeKey(evt)) {
+    return;
   }
+  evt.preventDefault();
+  if (
+    document.activeElement === hashtagInputNode ||
+    document.activeElement === commentInputNode ||
+    document.querySelector(`.${Popups.ERROR}`)
+  ) {
+    evt.stopPropagation();
+    return;
+  }
+  closeModalUploadForm();
 };
 
-function closeModalFormEditor() {
-  modalFormEditor.classList.add('hidden');
-  pageBody.classList.remove('modal-open');
+function closeModalUploadForm() {
+  uploadOverlayNode.classList.add('hidden');
+  bodyNode.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  modalFormEditorResetBtn.removeEventListener('click', onModalFormEditorResetBtnClick);
-  uploadForm.reset();
-  inputFile.value = '';
+  uploadFormResetButtonNode.removeEventListener('click', onUploadFormResetButtonClick);
+  uploadFormNode.reset();
+  fileInputNode.value = '';
   resetScale();
   resetEffects();
   resetValidation();
 }
 
 export const initUploadModal = () => {
-  inputFile.addEventListener('change', () => {
-    const file = inputFile.files[0];
+  fileInputNode.addEventListener('change', () => {
+    const file = fileInputNode.files[0];
     if (!file) {
       return;
     }
-    const fileName = file.name.toLowerCase();
-    const isValidType = FILE_TYPES.some((type) => fileName.endsWith(type));
-    if (!isValidType) {
-      return;
-    }
+
     const imageUrl = URL.createObjectURL(file);
-    previewImage.src = imageUrl;
-    effectsPreviews.forEach((preview) => {
-      preview.style.backgroundImage = `url(${imageUrl})`;
+    previewImageNode.src = imageUrl;
+    effectsPreviewsNodes.forEach((previewNode) => {
+      previewNode.style.backgroundImage = `url(${imageUrl})`;
     });
-    modalFormEditor.classList.remove('hidden');
-    pageBody.classList.add('modal-open');
-    modalFormEditorResetBtn.addEventListener('click', onModalFormEditorResetBtnClick);
+    uploadOverlayNode.classList.remove('hidden');
+    bodyNode.classList.add('modal-open');
+    uploadFormResetButtonNode.addEventListener('click', onUploadFormResetButtonClick);
     document.addEventListener('keydown', onDocumentKeydown);
   });
 
+  document.activeElement.blur();
   const blockSubmitButton = (isBlocked = SUBMIT_BUTTON_STATUS.DISABLED) => {
-    submitButton.disabled = isBlocked;
-    submitButton.textContent = isBlocked
+    submitButtonNode.disabled = isBlocked;
+    submitButtonNode.textContent = isBlocked
       ? SUBMIT_TEXTS.SENDING
       : SUBMIT_TEXTS.IDLE;
   };
 
-  uploadForm.addEventListener('submit', (evt) => {
+  uploadFormNode.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     if (!checkValid()) {
       return;
     }
 
-    const formData = new FormData(uploadForm);
+    const formData = new FormData(uploadFormNode);
     blockSubmitButton(SUBMIT_BUTTON_STATUS.DISABLED);
     sendPhoto(formData)
       .then(() => {
-        closeModalFormEditor();
+        closeModalUploadForm();
         showPopup(Popups.SUCCESS);
       })
       .finally(() => {

@@ -1,25 +1,113 @@
-import { DEFAULT_EFFECT, EFFECTS, EffectsSettings } from './constants.js';
+const Effects = {
+  NONE: 'none',
+  CHROME: 'chrome',
+  SEPIA: 'sepia',
+  MARVIN: 'marvin',
+  PHOBOS: 'phobos',
+  HEAT: 'heat'
+};
 
-const uploadPreview = document.querySelector('.img-upload__preview img');
-const effectLevel = document.querySelector('.img-upload__effect-level');
-const effectLevelSlider = document.querySelector('.effect-level__slider');
-const effectsList = document.querySelector('.effects__list');
+const DEFAULT_EFFECT = Effects.NONE;
+
+const EffectsSettings = {
+  [Effects.NONE]: {
+    slider: {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 80,
+      step: 1,
+      connect: 'lower',
+    },
+    style: '',
+    units: ''
+  },
+  [Effects.CHROME]: {
+    slider: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1
+    },
+    style: 'grayscale',
+    units: ''
+  },
+  [Effects.SEPIA]: {
+    slider: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1
+    },
+    style: 'sepia',
+    units: ''
+  },
+  [Effects.MARVIN]: {
+    slider: {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 100,
+      step: 1
+    },
+    style: 'invert',
+    units: '%'
+  },
+  [Effects.PHOBOS]: {
+    slider: {
+      range: {
+        min: 0,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1
+    },
+    style: 'blur',
+    units: 'px'
+  },
+  [Effects.HEAT]: {
+    slider: {
+      range: {
+        min: 1,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1
+    },
+    style: 'brightness',
+    units: ''
+  }
+};
+
+const uploadPreviewNode = document.querySelector('.img-upload__preview img');
+const effectLevelNode = document.querySelector('.img-upload__effect-level');
+const effectLevelSliderNode = document.querySelector('.effect-level__slider');
+const effectsListNode = document.querySelector('.effects__list');
+const effectLevelValueNode = document.querySelector('.effect-level__value');
 
 let currentEffect = DEFAULT_EFFECT;
 
 const applyEffect = (value) => {
-  if (currentEffect === EFFECTS.NONE) {
-    uploadPreview.style.filter = '';
+  if (currentEffect === Effects.NONE) {
+    uploadPreviewNode.style.filter = '';
     return;
   }
   const { style, units } = EffectsSettings[currentEffect];
-  uploadPreview.style.filter = `${style}(${value}${units})`;
+  uploadPreviewNode.style.filter = `${style}(${value}${units})`;
 };
 
 const initSlider = () => {
-  noUiSlider.create(effectLevelSlider, EffectsSettings[EFFECTS.NONE].slider);
-  effectLevelSlider.noUiSlider.on('update', () => {
-    const value = effectLevelSlider.noUiSlider.get();
+  noUiSlider.create(effectLevelSliderNode, EffectsSettings[Effects.NONE].slider);
+  effectLevelSliderNode.noUiSlider.on('update', () => {
+    const value = effectLevelSliderNode.noUiSlider.get();
+    effectLevelValueNode.value = value;
+    effectLevelValueNode.value = parseFloat(value);
     applyEffect(value);
   });
 };
@@ -27,15 +115,15 @@ const initSlider = () => {
 const setEffect = (effectName) => {
   currentEffect = effectName;
 
-  if (effectName === EFFECTS.NONE) {
-    effectLevel.classList.add('hidden');
-    uploadPreview.style.filter = '';
+  if (effectName === Effects.NONE) {
+    effectLevelNode.classList.add('hidden');
+    uploadPreviewNode.style.filter = '';
     return;
   }
 
-  effectLevel.classList.remove('hidden');
+  effectLevelNode.classList.remove('hidden');
   const { slider } = EffectsSettings[currentEffect];
-  effectLevelSlider.noUiSlider.updateOptions(slider, true);
+  effectLevelSliderNode.noUiSlider.updateOptions(slider, true);
 };
 
 const onEffectsChange = (evt) => {
@@ -46,10 +134,11 @@ const onEffectsChange = (evt) => {
 
 export const initEffects = () => {
   initSlider();
-  effectLevel.classList.add('hidden');
-  effectsList.addEventListener('change', onEffectsChange);
+  effectLevelNode.classList.add('hidden');
+  effectsListNode.addEventListener('change', onEffectsChange);
 };
 
 export const resetEffects = () => {
   setEffect(DEFAULT_EFFECT);
 };
+

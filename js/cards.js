@@ -1,10 +1,10 @@
 import { openModal } from './modal.js';
 
 const picturesContainerNode = document.querySelector('.pictures');
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const pictureTemplateNode = document.querySelector('#picture').content.querySelector('.picture');
 
 const clearPictures = () => {
-  document.querySelectorAll('.picture').forEach((el) => el.remove());
+  picturesContainerNode.querySelectorAll('.picture').forEach((element) => element.remove());
 };
 
 export const renderPictures = (photos) => {
@@ -12,23 +12,23 @@ export const renderPictures = (photos) => {
   clearPictures();
 
   photos.forEach((photo) => {
-    const picture = pictureTemplate.cloneNode(true);
-    const img = picture.querySelector('.picture__img');
-    const likes = picture.querySelector('.picture__likes');
-    const comments = picture.querySelector('.picture__comments');
+    const pictureNode = pictureTemplateNode.cloneNode(true);
+    const imageNode = pictureNode.querySelector('.picture__img');
+    const likesNode = pictureNode.querySelector('.picture__likes');
+    const commentsNode = pictureNode.querySelector('.picture__comments');
 
-    img.src = photo.url;
-    img.alt = photo.description;
-    likes.textContent = photo.likes;
-    comments.textContent = photo.comments.length;
+    imageNode.src = photo.url;
+    imageNode.alt = photo.description;
+    likesNode.textContent = photo.likes;
+    commentsNode.textContent = photo.comments.length;
 
 
-    picture.addEventListener('click', (evt) => {
+    pictureNode.addEventListener('click', (evt) => {
       evt.preventDefault();
       openModal(photo);
     });
 
-    fragment.appendChild(picture);
+    fragment.appendChild(pictureNode);
   });
 
   picturesContainerNode.appendChild(fragment);
